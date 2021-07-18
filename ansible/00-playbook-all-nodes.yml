@@ -1,0 +1,10 @@
+---
+
+- name: Configurando todos los nodos
+  hosts: all
+  vars_files:
+    - "group_vars/vars.yaml"
+  gather_facts: false
+  become: yes
+  roles:
+    - all_nodes

@@ -1,0 +1,80 @@
+---
+
+- name: create_namespace
+  shell: kubectl create namespace {{ my_namespace }}
+  register: namespace
+  failed_when: "namespace.rc not in [ 0, 1 ]"
+
+- name: validate_webapp
+  stat:
+    path: /root/{{ my_namespace }}
+  register: app
+
+- name: create_webapp_volumes
+  ansible.builtin.file:
+    path: /root/{{ my_namespace }}
+    state: directory
+    mode: '0755'
+  when: not app.stat.exists
+ 
+- name: copy_volume_pv_yaml
+  copy:
+    src: ../files/nfs-pv.yaml
+    dest: /root/{{ my_namespace }}
+    owner: root
+    group: root
+    mode: 0644
+  when: not app.stat.exists
+
+- name: copy_volume_pvc_yaml
+  copy:
+    src: ../files/nfs-pvc.yaml
+    dest: /root/{{ my_namespace }}
+    owner: root
+    group: root
+    mode: 0644
+  when: not app.stat.exists
+
+- name: apply_volume_pv_yaml
+  shell: "kubectl apply -f /root/{{ my_namespace }}/nfs-pv.yaml"
+  when: not app.stat.exists
+
+- name: apply_volume_pvc_yaml
+  shell: "kubectl apply -f /root/{{ my_namespace }}/nfs-pvc.yaml"
+  when: not app.stat.exists
+
+- name: copy_deployment_yaml
+  copy:
+    src: ../files/webapp-volumes.yaml
+    dest: /root/{{ my_namespace }}
+    owner: root
+    group: root
+    mode: 0644
+  when: not app.stat.exists
+
+- name: apply_deployment_yaml
+  shell: "kubectl apply -f /root/{{ my_namespace }}/webapp-volumes.yaml"
+  when: not app.stat.exists
+
+- name: get_pod
+  shell: kubectl get pods --namespace={{ my_namespace }} -o wide --no-headers | awk '{print $1}'
+  register: pod
+  when: not app.stat.exists
+
+- name: copy_index_php
+  copy:
+    src: ../files/index.php
+    dest: /root/{{ my_namespace }}
+    owner: root
+    group: root
+    mode: 0644
+  when: not app.stat.exists
+
+- name: wait_running_app
+  pause:
+    seconds: 30
+
+- name: copy_index_pod
+  shell: "kubectl cp /root/{{ my_namespace }}/index.php {{ my_namespace }}/{{ pod.stdout }}:/var/www/html"
+  when: not app.stat.exists
+

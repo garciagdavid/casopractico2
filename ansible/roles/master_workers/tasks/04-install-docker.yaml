@@ -1,0 +1,16 @@
+---
+
+- name: config_repo_docker
+  shell: "dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo"
+
+- name: install_repo_docker
+  dnf:
+    name: docker-ce-20.10.6-3.el8
+    state: present
+  register: dockerout
+
+- name: start_docker
+  service:
+    name: docker
+    enabled: yes
+    state: started

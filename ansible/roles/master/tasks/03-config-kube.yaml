@@ -1,0 +1,38 @@
+---
+
+- name: validate_config_kube
+  stat:
+    path: /root/.kube/config
+  register: config
+
+- name: init_kube
+  #shell: "kubeadm init --pod-network-cidr 10.0.1.0/24"
+  shell: "kubeadm init --pod-network-cidr 192.168.0.0/16"
+  when: not config.stat.exists
+
+- name: validate_directory_kube
+  stat:
+    path: /root/.kube
+  register: kubed
+
+- name: create_directory_kube
+  ansible.builtin.file:
+    path: /root/.kube
+    state: directory
+    mode: '0755'
+  when: not kubed.stat.exists
+
+- name: copy_config_kube
+  ansible.builtin.copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /root/.kube/config
+    remote_src: yes
+  when: not config.stat.exists
+
+- name: chown_file_configkube
+  file:
+    path: /root/.kube/config
+    owner: root
+    group: root
+    mode: 0644
+  when: not config.stat.exists

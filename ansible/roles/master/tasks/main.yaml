@@ -1,0 +1,8 @@
+---
+
+- include_tasks: 00-add-port-firewall.yaml
+- include_tasks: 01-pull-kubeadm.yaml
+- include_tasks: 02-allow-acces-workers.yaml
+- include_tasks: 03-config-kube.yaml
+- include_tasks: 04-install-sdn-calico.yaml
+- include_tasks: 05-install-ingress-controller.yaml

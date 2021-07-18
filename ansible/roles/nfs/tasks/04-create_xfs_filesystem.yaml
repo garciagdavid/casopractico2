@@ -1,0 +1,8 @@
+---
+
+- name: create_xfs_filesystem
+  become: true
+  filesystem:
+    fstype: xfs
+    dev: "/dev/{{ volume_group }}/{{ logical_volume }}"
+  when: nfs_partition.changed

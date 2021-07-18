@@ -1,0 +1,14 @@
+---
+
+- name: install_package_all_nodes
+  dnf:
+    name: "{{ item  }}"
+    state: latest
+    #state: removed
+  loop: "{{  packages_all_nodes  }}"
+
+- name: start_chronyd
+  service:
+    name: chronyd
+    enabled: yes
+    state: started

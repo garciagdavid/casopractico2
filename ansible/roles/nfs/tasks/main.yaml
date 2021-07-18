@@ -1,0 +1,11 @@
+---
+
+- include_tasks: 00-find-disk.yaml
+- include_tasks: 01-create-disk.yaml
+- include_tasks: 02-create-volumegroup.yaml
+- include_tasks: 03-create-logical_volume.yaml
+- include_tasks: 04-create_xfs_filesystem.yaml
+- include_tasks: 05-mount-volume.yaml
+- include_tasks: 06-install-packages.yaml
+- include_tasks: 07-export_nodes.yaml
+- include_tasks: 08-open_firewalls.yaml

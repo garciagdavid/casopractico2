@@ -1,0 +1,10 @@
+---
+
+- name: Desplegando una aplicación con volumenes mapeados
+  hosts: master
+  vars_files:
+    - "group_vars/vars.yaml"
+  become: yes
+  gather_facts: false
+  roles:
+    - app

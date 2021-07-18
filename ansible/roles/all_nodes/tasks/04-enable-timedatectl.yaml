@@ -1,0 +1,4 @@
+---
+
+- name: enabled_ntp
+  command: /usr/bin/timedatectl set-ntp true

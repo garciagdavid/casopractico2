@@ -1,0 +1,15 @@
+---
+
+# Read device information (always use unit when probing)
+- parted: "device=/dev/{{var_disk.stdout}} unit=MiB"
+  become: yes
+  register: sdc_info
+
+- name: create_physical_volume
+  parted:
+    device: "/dev/{{var_disk.stdout}}"
+    number: 1
+    #state: absent
+    state: present
+  when: sdc_info.partitions | length == 0
+  register: nfs_partition

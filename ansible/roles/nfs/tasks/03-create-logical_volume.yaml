@@ -1,0 +1,12 @@
+---
+
+- name: create_logical_volume
+  become: true
+  lvol:
+    vg: "{{ volume_group }}"
+    lv: "{{ logical_volume }}"
+    size: 100%FREE
+    force: no
+    #state: absent
+    state: present
+  when: nfs_partition.changed

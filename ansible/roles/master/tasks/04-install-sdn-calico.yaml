@@ -1,0 +1,10 @@
+---
+
+- name: reload_firewall
+  systemd:
+    name: firewalld
+    state: reloaded
+
+- name: install_calico
+  shell: "kubectl apply -f https://docs.projectcalico.org/manifests/canal.yaml"
+  register: calicoout

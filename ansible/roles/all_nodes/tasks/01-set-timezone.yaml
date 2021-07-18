@@ -1,0 +1,5 @@
+---
+
+- name: set_timezone
+  timezone:
+    name: America/Mexico_City

@@ -1,0 +1,9 @@
+---
+packages_all_nodes: ['chrony', 'nfs-utils', 'nfs4-acl-tools', 'wget']
+packages_nfs_node: ['nfs-utils', 'net-tools', 'rpcbind']
+volume_group: 'data_vg'
+logical_volume: 'nfs_lv'
+ports_master_node: ['6443/tcp', '2379-2380/tcp', '10250/tcp', '10251/tcp', '10252/tcp', '10255/tcp']
+ports_master_worker_node: ['8285/udp', '8472/udp']
+ports_worker_node: ['10250/tcp', '30000-32767/tcp']
+my_namespace: 'webapp-volumes'

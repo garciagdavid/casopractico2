@@ -1,0 +1,5 @@
+---
+
+- name: find_disk
+  shell: "lsblk -nblo NAME,SIZE | awk '$2 == 10*2^30 {print $1}'"
+  register: var_disk

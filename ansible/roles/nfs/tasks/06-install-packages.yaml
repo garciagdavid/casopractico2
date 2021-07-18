@@ -1,0 +1,14 @@
+---
+
+- name: install_package_nfs
+  dnf:
+    name: "{{ item  }}"
+    state: latest
+    #state: removed
+  loop: "{{  packages_nfs_node  }}"
+
+- name: start_nfs_server
+  service:
+    name: nfs-server
+    enabled: yes
+    state: started

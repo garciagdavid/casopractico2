@@ -1,0 +1,9 @@
+---
+
+- name: create_volume_group
+  lvg:
+    vg: "{{ volume_group }}"
+    pvs: "/dev/{{ var_disk.stdout }}1"
+    #state: absent
+    state: present
+  when: nfs_partition.changed

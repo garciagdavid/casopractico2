@@ -1,0 +1,9 @@
+---
+
+- include_tasks: 00-status-firewall.yaml
+- include_tasks: 01-enable-masquerading.yaml
+- include_tasks: 02-allow-kubernetes-traffic.yaml
+- include_tasks: 03-validations-swaps.yaml
+- include_tasks: 04-install-docker.yaml
+- include_tasks: 05-install-kubernetes.yaml
+- include_tasks: 06-add-ports-firewall-sdn.yaml

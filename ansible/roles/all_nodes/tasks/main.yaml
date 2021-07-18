@@ -1,0 +1,7 @@
+---
+
+- include_tasks: 00-update-packages.yaml
+- include_tasks: 01-set-timezone.yaml
+- include_tasks: 02-install-packages.yaml
+- include_tasks: 03-validate-selinux.yaml
+- include_tasks: 04-enable-timedatectl.yaml

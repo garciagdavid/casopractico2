@@ -1,0 +1,11 @@
+---
+
+- name: validate_selinux
+  become: yes
+  stat:
+    path: /etc/selinux/config
+  register: SELinux
+- name: unable_selinux
+  become: yes
+  command: /usr/bin/sed -i s/=enforcing/=disabled/g /etc/selinux/config
+  when: SELinux.stat.exists

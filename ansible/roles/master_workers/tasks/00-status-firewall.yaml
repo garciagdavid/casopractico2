@@ -1,0 +1,6 @@
+---
+
+- name: start_firewall
+  systemd:
+    name: firewalld
+    state: started

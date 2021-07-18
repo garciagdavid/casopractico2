@@ -1,0 +1,11 @@
+---
+- name: Configurar Master y Workers
+  hosts:
+    - master
+    - workers
+  vars_files:
+    - "group_vars/vars.yaml"
+  gather_facts: false
+  become: yes
+  roles:
+    - master_workers

@@ -1,0 +1,6 @@
+---
+
+- name: update_package_all_nodes
+  dnf:
+    name: "*"
+    state: latest

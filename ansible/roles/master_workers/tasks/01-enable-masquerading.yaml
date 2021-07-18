@@ -1,0 +1,17 @@
+---
+
+- name: add_module_br_netfilter
+  modprobe:
+    name: br_netfilter
+    state: present
+
+- name: open_firewall
+  firewalld:
+    masquerade: yes
+    state: enabled
+    permanent: yes
+
+- name: reload_firewall
+  systemd:
+    name: firewalld
+    state: reloaded

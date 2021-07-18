@@ -1,0 +1,19 @@
+---
+
+- name: add_richrules
+  firewalld:
+    rich_rule: "rule family=ipv4 source address={{item}}/32 accept"
+    permanent: yes
+    state: enabled
+  loop: "{{ query('inventory_hostnames', 'workers') }}"
+
+- name: add_richrules_local
+  firewalld:
+    rich_rule: "rule family=ipv4 source address=172.17.0.0/16 accept"
+    permanent: yes
+    state: enabled
+
+- name: reload_firewall
+  systemd:
+    name: firewalld
+    state: reloaded

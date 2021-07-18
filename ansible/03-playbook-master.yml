@@ -1,0 +1,9 @@
+---
+- name: Configurando kubernetes en el nodo master
+  hosts: master
+  vars_files:
+    - "group_vars/vars.yaml"
+  gather_facts: true
+  become: yes
+  roles:
+    - master

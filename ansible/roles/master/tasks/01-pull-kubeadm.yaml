@@ -1,0 +1,4 @@
+---
+
+- name: pull_kubeadm
+  shell: "kubeadm config images pull"

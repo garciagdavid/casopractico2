@@ -1,0 +1,18 @@
+---
+
+- name: config_repo_kubernetes
+  copy:
+    src: ../library/kubernetes.repo
+    dest: /etc/yum.repos.d/kubernetes.repo
+    owner: root
+    group: root
+    mode: 0644
+
+- name: install_repo_kubernetes
+  shell: "dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes"
+
+- name: start_kubernetes
+  service:
+    name: kubelet
+    enabled: yes
+    state: started

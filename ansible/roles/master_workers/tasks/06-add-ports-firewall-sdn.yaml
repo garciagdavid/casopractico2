@@ -1,0 +1,13 @@
+---
+
+- name: add_port_firewall_sdn
+  firewalld:
+    port: "{{item}}"
+    permanent: yes
+    state: enabled
+  loop: "{{ports_master_worker_node}}"
+
+- name: reload_firewall
+  systemd:
+    name: firewalld
+    state: reloaded

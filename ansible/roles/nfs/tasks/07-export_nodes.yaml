@@ -1,0 +1,16 @@
+---
+
+- name: add_exports
+  lineinfile:
+    path: /etc/exports
+    state: present
+    line: "{{outputvol.name}}	{{ item }}(rw,sync)"
+  loop: "{{ query('inventory_hostnames', 'all:!nfs') }}"
+
+- name: reload_exports_r
+  become: yes
+  command: "exportfs -r"
+
+- name: reload_exports_s
+  become: yes
+  command: "exportfs -s"
